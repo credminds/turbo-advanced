@@ -74,7 +74,7 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
-      bugsink:
+      glitchtip-web:
         condition: service_healthy
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:4000/health/" ]
@@ -210,25 +210,52 @@ services:
       - app-internal
 
   # ---------------------------------------------------------------------------
-  # BUGSINK (Error Tracking)
+  # GLITCHTIP (Error Tracking, Performance & Uptime Monitoring)
   # ---------------------------------------------------------------------------
-  bugsink:
-    image: bugsink/bugsink:latest
+  glitchtip-db:
+    image: postgres:17-bookworm
+    restart: unless-stopped
+    expose:
+      - "5432"
+    volumes:
+      - glitchtip_db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: glitchtip
+      POSTGRES_USER: glitchtip
+      POSTGRES_PASSWORD: ${GLITCHTIP_DB_PASSWORD}
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U glitchtip" ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    networks:
+      - app-internal
+
+  glitchtip-web:
+    image: glitchtip/glitchtip:latest
     restart: unless-stopped
     ports:
       - "127.0.0.1:8001:8000"
-    volumes:
-      - bugsink_data:/data
     environment:
-      SECRET_KEY: ${BUGSINK_SECRET_KEY}
-      CREATE_SUPERUSER: ${BUGSINK_SUPERUSER:-}
-      BASE_URL: ${BUGSINK_BASE_URL:-http://localhost:8001}
+      DATABASE_URL: postgres://glitchtip:${GLITCHTIP_DB_PASSWORD}@glitchtip-db:5432/glitchtip
+      REDIS_URL: redis://redis:6379/1
+      SECRET_KEY: ${GLITCHTIP_SECRET_KEY}
+      PORT: 8000
+      EMAIL_URL: ${GLITCHTIP_EMAIL_URL:-consolemail://}
+      GLITCHTIP_DOMAIN: ${GLITCHTIP_DOMAIN}
+      DEFAULT_FROM_EMAIL: ${GLITCHTIP_FROM_EMAIL:-noreply@localhost}
+      ENABLE_OPEN_USER_REGISTRATION: ${GLITCHTIP_OPEN_REGISTRATION:-false}
+    depends_on:
+      glitchtip-db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8000/" ]
       interval: 30s
       timeout: 10s
       retries: 3
-      start_period: 15s
+      start_period: 30s
     deploy:
       resources:
         limits:
@@ -240,6 +267,32 @@ services:
       - app-internal
       - app-external
 
+  glitchtip-worker:
+    image: glitchtip/glitchtip:latest
+    restart: unless-stopped
+    command: ./bin/run-celery-with-beat.sh
+    environment:
+      DATABASE_URL: postgres://glitchtip:${GLITCHTIP_DB_PASSWORD}@glitchtip-db:5432/glitchtip
+      REDIS_URL: redis://redis:6379/1
+      SECRET_KEY: ${GLITCHTIP_SECRET_KEY}
+      EMAIL_URL: ${GLITCHTIP_EMAIL_URL:-consolemail://}
+      GLITCHTIP_DOMAIN: ${GLITCHTIP_DOMAIN}
+      DEFAULT_FROM_EMAIL: ${GLITCHTIP_FROM_EMAIL:-noreply@localhost}
+    depends_on:
+      glitchtip-db:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          memory: 256M
+    networks:
+      - app-internal
+
 # -----------------------------------------------------------------------------
 # VOLUMES
 # -----------------------------------------------------------------------------
@@ -248,7 +301,7 @@ volumes:
     driver: local
   redis_data:
     driver: local
-  bugsink_data:
+  glitchtip_db:
     driver: local
 
 # -----------------------------------------------------------------------------
