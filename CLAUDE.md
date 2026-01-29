@@ -95,6 +95,53 @@ docker compose exec web pnpm openapi:generate
 - Health Check: http://localhost:8000/health/
 - Swagger UI: http://localhost:8000/api/schema/swagger-ui/
 - Admin: http://localhost:8000/admin/
+- BugSink: http://localhost:8001 (error tracking)
+
+## Error Tracking (BugSink)
+
+Self-hosted error tracking using BugSink with Sentry SDK compatibility.
+
+### Setup
+1. Start services: `docker compose up`
+2. Access BugSink at http://localhost:8001 (login: admin / admin)
+3. Create a **Team** first (e.g., "Turbo Team")
+4. Create a **Project** inside the team (e.g., "Backend API")
+5. Go to Project → **Settings** → **SDK Setup** and copy the DSN
+6. The DSN will look like: `http://abc123@localhost:8001/1`
+7. **Important**: Change `localhost:8001` to `bugsink:8000` for Docker networking:
+   ```
+   # Browser URL:  http://abc123@localhost:8001/1
+   # Docker URL:   http://abc123@bugsink:8000/1
+   ```
+8. Add the Docker URL to `.env.backend`:
+   ```
+   SENTRY_DSN=http://abc123@bugsink:8000/1
+   ```
+9. Restart the API: `docker compose restart api`
+
+### Docker Networking Note
+- **Inside Docker** (container-to-container): Use `bugsink:8000` (service name)
+- **Outside Docker** (browser): Use `localhost:8001` (port mapping)
+
+### Manual Error Reporting
+```python
+import sentry_sdk
+
+# Capture exception
+try:
+    risky_operation()
+except Exception as e:
+    sentry_sdk.capture_exception(e)
+
+# Capture message
+sentry_sdk.capture_message("Something happened")
+
+# Add context
+with sentry_sdk.push_scope() as scope:
+    scope.set_tag("custom_tag", "value")
+    scope.set_extra("extra_data", {"key": "value"})
+    sentry_sdk.capture_message("Tagged message")
+```
 
 ## System Settings (settings_config app)
 

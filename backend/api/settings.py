@@ -1,9 +1,21 @@
 from os import environ
 from pathlib import Path
 
+import sentry_sdk
 from django.core.management.utils import get_random_secret_key
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
+
+######################################################################
+# Sentry / BugSink
+######################################################################
+SENTRY_DSN = environ.get("SENTRY_DSN", "")
+if SENTRY_DSN:
+    sentry_sdk.init(
+        dsn=SENTRY_DSN,
+        traces_sample_rate=0.1,
+        send_default_pii=True,
+    )
 
 ######################################################################
 # General

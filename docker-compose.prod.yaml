@@ -68,10 +68,13 @@ services:
       - DATABASE_USER=${POSTGRES_USER:-postgres}
       - DATABASE_PASSWORD=${POSTGRES_PASSWORD}
       - REDIS_URL=redis://redis:6379/0
+      - SENTRY_DSN=${SENTRY_DSN:-}
     depends_on:
       db:
         condition: service_healthy
       redis:
+        condition: service_healthy
+      bugsink:
         condition: service_healthy
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:4000/health/" ]
@@ -206,6 +209,37 @@ services:
     networks:
       - app-internal
 
+  # ---------------------------------------------------------------------------
+  # BUGSINK (Error Tracking)
+  # ---------------------------------------------------------------------------
+  bugsink:
+    image: bugsink/bugsink:latest
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8001:8000"
+    volumes:
+      - bugsink_data:/data
+    environment:
+      SECRET_KEY: ${BUGSINK_SECRET_KEY}
+      CREATE_SUPERUSER: ${BUGSINK_SUPERUSER:-}
+      BASE_URL: ${BUGSINK_BASE_URL:-http://localhost:8001}
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 15s
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 512M
+        reservations:
+          memory: 256M
+    networks:
+      - app-internal
+      - app-external
+
 # -----------------------------------------------------------------------------
 # VOLUMES
 # -----------------------------------------------------------------------------
@@ -213,6 +247,8 @@ volumes:
   postgresql_data:
     driver: local
   redis_data:
+    driver: local
+  bugsink_data:
     driver: local
 
 # -----------------------------------------------------------------------------
