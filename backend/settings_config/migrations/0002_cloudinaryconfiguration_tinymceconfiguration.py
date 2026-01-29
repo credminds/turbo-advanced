@@ -4,46 +4,163 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('settings_config', '0001_initial'),
+        ("settings_config", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='CloudinaryConfiguration',
+            name="CloudinaryConfiguration",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('is_active', models.BooleanField(default=False, help_text='Enable Cloudinary integration', verbose_name='Active')),
-                ('cloud_name', models.CharField(blank=True, help_text='Cloudinary cloud name', max_length=255, verbose_name='Cloud Name')),
-                ('api_key', models.CharField(blank=True, help_text='Cloudinary API key', max_length=255, verbose_name='API Key')),
-                ('api_secret', models.CharField(blank=True, help_text='Cloudinary API secret', max_length=255, verbose_name='API Secret')),
-                ('default_folder', models.CharField(default='uploads', help_text='Default folder for uploads in Cloudinary', max_length=255, verbose_name='Default Folder')),
-                ('auto_optimize', models.BooleanField(default=True, help_text='Automatically optimize images (quality and format)', verbose_name='Auto Optimize')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Created')),
-                ('updated_at', models.DateTimeField(auto_now=True, verbose_name='Updated')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "is_active",
+                    models.BooleanField(
+                        default=False,
+                        help_text="Enable Cloudinary integration",
+                        verbose_name="Active",
+                    ),
+                ),
+                (
+                    "cloud_name",
+                    models.CharField(
+                        blank=True,
+                        help_text="Cloudinary cloud name",
+                        max_length=255,
+                        verbose_name="Cloud Name",
+                    ),
+                ),
+                (
+                    "api_key",
+                    models.CharField(
+                        blank=True,
+                        help_text="Cloudinary API key",
+                        max_length=255,
+                        verbose_name="API Key",
+                    ),
+                ),
+                (
+                    "api_secret",
+                    models.CharField(
+                        blank=True,
+                        help_text="Cloudinary API secret",
+                        max_length=255,
+                        verbose_name="API Secret",
+                    ),
+                ),
+                (
+                    "default_folder",
+                    models.CharField(
+                        default="uploads",
+                        help_text="Default folder for uploads in Cloudinary",
+                        max_length=255,
+                        verbose_name="Default Folder",
+                    ),
+                ),
+                (
+                    "auto_optimize",
+                    models.BooleanField(
+                        default=True,
+                        help_text="Automatically optimize images (quality and format)",
+                        verbose_name="Auto Optimize",
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(auto_now_add=True, verbose_name="Created"),
+                ),
+                (
+                    "updated_at",
+                    models.DateTimeField(auto_now=True, verbose_name="Updated"),
+                ),
             ],
             options={
-                'verbose_name': 'Cloudinary Configuration',
-                'verbose_name_plural': 'Cloudinary Configuration',
+                "verbose_name": "Cloudinary Configuration",
+                "verbose_name_plural": "Cloudinary Configuration",
             },
         ),
         migrations.CreateModel(
-            name='TinyMCEConfiguration',
+            name="TinyMCEConfiguration",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('is_active', models.BooleanField(default=False, help_text='Enable TinyMCE editor', verbose_name='Active')),
-                ('api_key', models.CharField(blank=True, help_text='TinyMCE Cloud API key (get from tiny.cloud)', max_length=255, verbose_name='API Key')),
-                ('height', models.PositiveIntegerField(default=500, help_text='Editor height in pixels', verbose_name='Editor Height')),
-                ('menubar', models.CharField(default='file edit view insert format tools table help', help_text='Menu bar items', max_length=255, verbose_name='Menu Bar')),
-                ('plugins', models.TextField(default='advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table help wordcount', help_text='Space-separated list of plugins', verbose_name='Plugins')),
-                ('toolbar', models.TextField(default='undo redo | blocks | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | image media link | code | help', help_text='Toolbar configuration', verbose_name='Toolbar')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Created')),
-                ('updated_at', models.DateTimeField(auto_now=True, verbose_name='Updated')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "is_active",
+                    models.BooleanField(
+                        default=False,
+                        help_text="Enable TinyMCE editor",
+                        verbose_name="Active",
+                    ),
+                ),
+                (
+                    "api_key",
+                    models.CharField(
+                        blank=True,
+                        help_text="TinyMCE Cloud API key (get from tiny.cloud)",
+                        max_length=255,
+                        verbose_name="API Key",
+                    ),
+                ),
+                (
+                    "height",
+                    models.PositiveIntegerField(
+                        default=500,
+                        help_text="Editor height in pixels",
+                        verbose_name="Editor Height",
+                    ),
+                ),
+                (
+                    "menubar",
+                    models.CharField(
+                        default="file edit view insert format tools table help",
+                        help_text="Menu bar items",
+                        max_length=255,
+                        verbose_name="Menu Bar",
+                    ),
+                ),
+                (
+                    "plugins",
+                    models.TextField(
+                        default="advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table help wordcount",
+                        help_text="Space-separated list of plugins",
+                        verbose_name="Plugins",
+                    ),
+                ),
+                (
+                    "toolbar",
+                    models.TextField(
+                        default="undo redo | blocks | bold italic forecolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | image media link | code | help",
+                        help_text="Toolbar configuration",
+                        verbose_name="Toolbar",
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(auto_now_add=True, verbose_name="Created"),
+                ),
+                (
+                    "updated_at",
+                    models.DateTimeField(auto_now=True, verbose_name="Updated"),
+                ),
             ],
             options={
-                'verbose_name': 'TinyMCE Configuration',
-                'verbose_name_plural': 'TinyMCE Configuration',
+                "verbose_name": "TinyMCE Configuration",
+                "verbose_name_plural": "TinyMCE Configuration",
             },
         ),
     ]

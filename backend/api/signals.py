@@ -1,6 +1,6 @@
 import logging
 
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import pre_save
 from django.dispatch import receiver
 
 from settings_config.services import delete_from_cloudinary, upload_to_cloudinary
@@ -35,7 +35,10 @@ def upload_profile_picture_to_cloudinary(sender, instance, **kwargs):
         return
 
     # If a new profile picture is being uploaded
-    if instance.profile_picture and instance.profile_picture != old_instance.profile_picture:
+    if (
+        instance.profile_picture
+        and instance.profile_picture != old_instance.profile_picture
+    ):
         # Delete old image from Cloudinary if exists
         if old_instance.profile_picture_url:
             delete_from_cloudinary(old_instance.profile_picture_url)

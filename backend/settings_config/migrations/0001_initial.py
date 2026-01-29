@@ -4,46 +4,162 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='ResendConfiguration',
+            name="ResendConfiguration",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('is_active', models.BooleanField(default=False, help_text='Enable Resend email integration', verbose_name='Active')),
-                ('api_key', models.CharField(blank=True, help_text='Resend API key (re_...)', max_length=255, verbose_name='API Key')),
-                ('from_email', models.EmailField(blank=True, help_text='Default sender email address', max_length=255, verbose_name='From Email')),
-                ('from_name', models.CharField(blank=True, help_text='Default sender name', max_length=255, verbose_name='From Name')),
-                ('last_test_at', models.DateTimeField(blank=True, help_text='Last successful test email sent', null=True, verbose_name='Last Test')),
-                ('last_test_status', models.CharField(blank=True, choices=[('', 'Not Tested'), ('success', 'Success'), ('failed', 'Failed')], default='', max_length=50, verbose_name='Test Status')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Created')),
-                ('updated_at', models.DateTimeField(auto_now=True, verbose_name='Updated')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "is_active",
+                    models.BooleanField(
+                        default=False,
+                        help_text="Enable Resend email integration",
+                        verbose_name="Active",
+                    ),
+                ),
+                (
+                    "api_key",
+                    models.CharField(
+                        blank=True,
+                        help_text="Resend API key (re_...)",
+                        max_length=255,
+                        verbose_name="API Key",
+                    ),
+                ),
+                (
+                    "from_email",
+                    models.EmailField(
+                        blank=True,
+                        help_text="Default sender email address",
+                        max_length=255,
+                        verbose_name="From Email",
+                    ),
+                ),
+                (
+                    "from_name",
+                    models.CharField(
+                        blank=True,
+                        help_text="Default sender name",
+                        max_length=255,
+                        verbose_name="From Name",
+                    ),
+                ),
+                (
+                    "last_test_at",
+                    models.DateTimeField(
+                        blank=True,
+                        help_text="Last successful test email sent",
+                        null=True,
+                        verbose_name="Last Test",
+                    ),
+                ),
+                (
+                    "last_test_status",
+                    models.CharField(
+                        blank=True,
+                        choices=[
+                            ("", "Not Tested"),
+                            ("success", "Success"),
+                            ("failed", "Failed"),
+                        ],
+                        default="",
+                        max_length=50,
+                        verbose_name="Test Status",
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(auto_now_add=True, verbose_name="Created"),
+                ),
+                (
+                    "updated_at",
+                    models.DateTimeField(auto_now=True, verbose_name="Updated"),
+                ),
             ],
             options={
-                'verbose_name': 'Resend Configuration',
-                'verbose_name_plural': 'Resend Configuration',
+                "verbose_name": "Resend Configuration",
+                "verbose_name_plural": "Resend Configuration",
             },
         ),
         migrations.CreateModel(
-            name='StripeConfiguration',
+            name="StripeConfiguration",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('is_active', models.BooleanField(default=False, help_text='Enable Stripe integration', verbose_name='Active')),
-                ('publishable_key', models.CharField(blank=True, help_text='Stripe publishable key (pk_test_... or pk_live_...)', max_length=255, verbose_name='Publishable Key')),
-                ('secret_key', models.CharField(blank=True, help_text='Stripe secret key (sk_test_... or sk_live_...)', max_length=255, verbose_name='Secret Key')),
-                ('webhook_secret', models.CharField(blank=True, help_text='Stripe webhook signing secret (whsec_...)', max_length=255, verbose_name='Webhook Secret')),
-                ('is_live_mode', models.BooleanField(default=False, help_text='Use live mode keys (uncheck for test mode)', verbose_name='Live Mode')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Created')),
-                ('updated_at', models.DateTimeField(auto_now=True, verbose_name='Updated')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "is_active",
+                    models.BooleanField(
+                        default=False,
+                        help_text="Enable Stripe integration",
+                        verbose_name="Active",
+                    ),
+                ),
+                (
+                    "publishable_key",
+                    models.CharField(
+                        blank=True,
+                        help_text="Stripe publishable key (pk_test_... or pk_live_...)",
+                        max_length=255,
+                        verbose_name="Publishable Key",
+                    ),
+                ),
+                (
+                    "secret_key",
+                    models.CharField(
+                        blank=True,
+                        help_text="Stripe secret key (sk_test_... or sk_live_...)",
+                        max_length=255,
+                        verbose_name="Secret Key",
+                    ),
+                ),
+                (
+                    "webhook_secret",
+                    models.CharField(
+                        blank=True,
+                        help_text="Stripe webhook signing secret (whsec_...)",
+                        max_length=255,
+                        verbose_name="Webhook Secret",
+                    ),
+                ),
+                (
+                    "is_live_mode",
+                    models.BooleanField(
+                        default=False,
+                        help_text="Use live mode keys (uncheck for test mode)",
+                        verbose_name="Live Mode",
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(auto_now_add=True, verbose_name="Created"),
+                ),
+                (
+                    "updated_at",
+                    models.DateTimeField(auto_now=True, verbose_name="Updated"),
+                ),
             ],
             options={
-                'verbose_name': 'Stripe Configuration',
-                'verbose_name_plural': 'Stripe Configuration',
+                "verbose_name": "Stripe Configuration",
+                "verbose_name_plural": "Stripe Configuration",
             },
         ),
     ]

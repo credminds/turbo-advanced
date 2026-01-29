@@ -4,20 +4,29 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('api', '0001_initial'),
+        ("api", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='user',
-            name='profile_picture',
-            field=models.ImageField(blank=True, help_text='Upload a profile picture (will be stored in Cloudinary)', null=True, upload_to='profile_pictures/', verbose_name='Profile Picture'),
+            model_name="user",
+            name="profile_picture",
+            field=models.ImageField(
+                blank=True,
+                help_text="Upload a profile picture (will be stored in Cloudinary)",
+                null=True,
+                upload_to="profile_pictures/",
+                verbose_name="Profile Picture",
+            ),
         ),
         migrations.AddField(
-            model_name='user',
-            name='profile_picture_url',
-            field=models.URLField(blank=True, help_text='Cloudinary URL for profile picture', verbose_name='Profile Picture URL'),
+            model_name="user",
+            name="profile_picture_url",
+            field=models.URLField(
+                blank=True,
+                help_text="Cloudinary URL for profile picture",
+                verbose_name="Profile Picture URL",
+            ),
         ),
     ]

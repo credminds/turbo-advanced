@@ -4,10 +4,8 @@ from django.utils.translation import gettext_lazy as _
 from unfold.admin import ModelAdmin
 from unfold.decorators import display
 from unfold.widgets import (
-    UnfoldAdminSelectWidget,
     UnfoldAdminTextareaWidget,
     UnfoldAdminTextInputWidget,
-    UnfoldBooleanSwitchWidget,
 )
 
 from settings_config.services import get_tinymce_config
@@ -160,7 +158,12 @@ class NewsletterSubscriberAdmin(ModelAdmin):
     list_display = ["email", "name", "display_status", "created_at"]
     list_filter = ["status"]
     search_fields = ["email", "name"]
-    readonly_fields = ["confirmation_token", "confirmed_at", "unsubscribed_at", "created_at"]
+    readonly_fields = [
+        "confirmation_token",
+        "confirmed_at",
+        "unsubscribed_at",
+        "created_at",
+    ]
 
     formfield_overrides = {
         models.CharField: {"widget": UnfoldAdminTextInputWidget},
@@ -178,7 +181,12 @@ class NewsletterSubscriberAdmin(ModelAdmin):
         (
             _("Status Details"),
             {
-                "fields": ("confirmation_token", "confirmed_at", "unsubscribed_at", "created_at"),
+                "fields": (
+                    "confirmation_token",
+                    "confirmed_at",
+                    "unsubscribed_at",
+                    "created_at",
+                ),
                 "classes": ["tab"],
             },
         ),
@@ -199,7 +207,13 @@ class NewsletterSubscriberAdmin(ModelAdmin):
 @admin.register(Newsletter)
 class NewsletterAdmin(ModelAdmin):
     form = NewsletterAdminForm
-    list_display = ["subject", "display_status", "recipients_count", "scheduled_at", "sent_at"]
+    list_display = [
+        "subject",
+        "display_status",
+        "recipients_count",
+        "scheduled_at",
+        "sent_at",
+    ]
     list_filter = ["status"]
     search_fields = ["subject", "content"]
     readonly_fields = ["sent_at", "recipients_count", "created_at", "updated_at"]

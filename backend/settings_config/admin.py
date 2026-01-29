@@ -127,9 +127,7 @@ class ResendConfigurationForm(forms.ModelForm):
         fields = "__all__"
         widgets = {
             "is_active": UnfoldBooleanSwitchWidget(),
-            "api_key": UnfoldAdminTextInputWidget(
-                attrs={"placeholder": "re_..."}
-            ),
+            "api_key": UnfoldAdminTextInputWidget(attrs={"placeholder": "re_..."}),
             "from_email": UnfoldAdminEmailInputWidget(
                 attrs={"placeholder": "noreply@yourdomain.com"}
             ),
@@ -277,9 +275,7 @@ class TinyMCEConfigurationForm(forms.ModelForm):
             "api_key": UnfoldAdminTextInputWidget(
                 attrs={"placeholder": "Your TinyMCE Cloud API key"}
             ),
-            "height": UnfoldAdminIntegerFieldWidget(
-                attrs={"placeholder": "500"}
-            ),
+            "height": UnfoldAdminIntegerFieldWidget(attrs={"placeholder": "500"}),
             "menubar": UnfoldAdminTextInputWidget(),
             "plugins": UnfoldAdminTextareaWidget(
                 attrs={"rows": 3, "placeholder": "advlist autolink lists link image..."}

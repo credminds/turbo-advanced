@@ -6,7 +6,6 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
@@ -15,94 +14,309 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Category',
+            name="Category",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=100, verbose_name='Name')),
-                ('slug', models.SlugField(blank=True, max_length=100, unique=True, verbose_name='Slug')),
-                ('description', models.TextField(blank=True, verbose_name='Description')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Created')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=100, verbose_name="Name")),
+                (
+                    "slug",
+                    models.SlugField(
+                        blank=True, max_length=100, unique=True, verbose_name="Slug"
+                    ),
+                ),
+                (
+                    "description",
+                    models.TextField(blank=True, verbose_name="Description"),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(auto_now_add=True, verbose_name="Created"),
+                ),
             ],
             options={
-                'verbose_name': 'Category',
-                'verbose_name_plural': 'Categories',
-                'ordering': ['name'],
+                "verbose_name": "Category",
+                "verbose_name_plural": "Categories",
+                "ordering": ["name"],
             },
         ),
         migrations.CreateModel(
-            name='Newsletter',
+            name="Newsletter",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('subject', models.CharField(max_length=255, verbose_name='Subject')),
-                ('content', models.TextField(blank=True, verbose_name='Content')),
-                ('status', models.CharField(choices=[('draft', 'Draft'), ('scheduled', 'Scheduled'), ('sent', 'Sent')], default='draft', max_length=20, verbose_name='Status')),
-                ('scheduled_at', models.DateTimeField(blank=True, null=True, verbose_name='Scheduled at')),
-                ('sent_at', models.DateTimeField(blank=True, null=True, verbose_name='Sent at')),
-                ('recipients_count', models.PositiveIntegerField(default=0, verbose_name='Recipients')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Created')),
-                ('updated_at', models.DateTimeField(auto_now=True, verbose_name='Updated')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("subject", models.CharField(max_length=255, verbose_name="Subject")),
+                ("content", models.TextField(blank=True, verbose_name="Content")),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("draft", "Draft"),
+                            ("scheduled", "Scheduled"),
+                            ("sent", "Sent"),
+                        ],
+                        default="draft",
+                        max_length=20,
+                        verbose_name="Status",
+                    ),
+                ),
+                (
+                    "scheduled_at",
+                    models.DateTimeField(
+                        blank=True, null=True, verbose_name="Scheduled at"
+                    ),
+                ),
+                (
+                    "sent_at",
+                    models.DateTimeField(blank=True, null=True, verbose_name="Sent at"),
+                ),
+                (
+                    "recipients_count",
+                    models.PositiveIntegerField(default=0, verbose_name="Recipients"),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(auto_now_add=True, verbose_name="Created"),
+                ),
+                (
+                    "updated_at",
+                    models.DateTimeField(auto_now=True, verbose_name="Updated"),
+                ),
             ],
             options={
-                'verbose_name': 'Newsletter',
-                'verbose_name_plural': 'Newsletters',
-                'ordering': ['-created_at'],
+                "verbose_name": "Newsletter",
+                "verbose_name_plural": "Newsletters",
+                "ordering": ["-created_at"],
             },
         ),
         migrations.CreateModel(
-            name='NewsletterSubscriber',
+            name="NewsletterSubscriber",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('email', models.EmailField(max_length=254, unique=True, verbose_name='Email')),
-                ('name', models.CharField(blank=True, max_length=100, verbose_name='Name')),
-                ('status', models.CharField(choices=[('pending', 'Pending Confirmation'), ('active', 'Active'), ('unsubscribed', 'Unsubscribed')], default='pending', max_length=20, verbose_name='Status')),
-                ('confirmation_token', models.CharField(blank=True, max_length=100, verbose_name='Confirmation Token')),
-                ('confirmed_at', models.DateTimeField(blank=True, null=True, verbose_name='Confirmed at')),
-                ('unsubscribed_at', models.DateTimeField(blank=True, null=True, verbose_name='Unsubscribed at')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Subscribed at')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "email",
+                    models.EmailField(
+                        max_length=254, unique=True, verbose_name="Email"
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(blank=True, max_length=100, verbose_name="Name"),
+                ),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("pending", "Pending Confirmation"),
+                            ("active", "Active"),
+                            ("unsubscribed", "Unsubscribed"),
+                        ],
+                        default="pending",
+                        max_length=20,
+                        verbose_name="Status",
+                    ),
+                ),
+                (
+                    "confirmation_token",
+                    models.CharField(
+                        blank=True, max_length=100, verbose_name="Confirmation Token"
+                    ),
+                ),
+                (
+                    "confirmed_at",
+                    models.DateTimeField(
+                        blank=True, null=True, verbose_name="Confirmed at"
+                    ),
+                ),
+                (
+                    "unsubscribed_at",
+                    models.DateTimeField(
+                        blank=True, null=True, verbose_name="Unsubscribed at"
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(
+                        auto_now_add=True, verbose_name="Subscribed at"
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Newsletter Subscriber',
-                'verbose_name_plural': 'Newsletter Subscribers',
-                'ordering': ['-created_at'],
+                "verbose_name": "Newsletter Subscriber",
+                "verbose_name_plural": "Newsletter Subscribers",
+                "ordering": ["-created_at"],
             },
         ),
         migrations.CreateModel(
-            name='Tag',
+            name="Tag",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=50, verbose_name='Name')),
-                ('slug', models.SlugField(blank=True, unique=True, verbose_name='Slug')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=50, verbose_name="Name")),
+                (
+                    "slug",
+                    models.SlugField(blank=True, unique=True, verbose_name="Slug"),
+                ),
             ],
             options={
-                'verbose_name': 'Tag',
-                'verbose_name_plural': 'Tags',
-                'ordering': ['name'],
+                "verbose_name": "Tag",
+                "verbose_name_plural": "Tags",
+                "ordering": ["name"],
             },
         ),
         migrations.CreateModel(
-            name='Post',
+            name="Post",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=255, verbose_name='Title')),
-                ('slug', models.SlugField(blank=True, max_length=255, unique=True, verbose_name='Slug')),
-                ('excerpt', models.TextField(blank=True, help_text='Brief summary of the post (shown in listings)', verbose_name='Excerpt')),
-                ('content', models.TextField(blank=True, verbose_name='Content')),
-                ('featured_image_url', models.URLField(blank=True, help_text='URL to the featured image (Cloudinary)', verbose_name='Featured Image URL')),
-                ('status', models.CharField(choices=[('draft', 'Draft'), ('published', 'Published'), ('archived', 'Archived')], default='draft', max_length=20, verbose_name='Status')),
-                ('is_featured', models.BooleanField(default=False, help_text='Show in featured posts section', verbose_name='Featured')),
-                ('published_at', models.DateTimeField(blank=True, null=True, verbose_name='Published at')),
-                ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='Created')),
-                ('updated_at', models.DateTimeField(auto_now=True, verbose_name='Updated')),
-                ('meta_title', models.CharField(blank=True, help_text='SEO title (max 70 chars)', max_length=70, verbose_name='Meta Title')),
-                ('meta_description', models.CharField(blank=True, help_text='SEO description (max 160 chars)', max_length=160, verbose_name='Meta Description')),
-                ('author', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='blog_posts', to=settings.AUTH_USER_MODEL, verbose_name='Author')),
-                ('category', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='posts', to='blog.category', verbose_name='Category')),
-                ('tags', models.ManyToManyField(blank=True, related_name='posts', to='blog.tag', verbose_name='Tags')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=255, verbose_name="Title")),
+                (
+                    "slug",
+                    models.SlugField(
+                        blank=True, max_length=255, unique=True, verbose_name="Slug"
+                    ),
+                ),
+                (
+                    "excerpt",
+                    models.TextField(
+                        blank=True,
+                        help_text="Brief summary of the post (shown in listings)",
+                        verbose_name="Excerpt",
+                    ),
+                ),
+                ("content", models.TextField(blank=True, verbose_name="Content")),
+                (
+                    "featured_image_url",
+                    models.URLField(
+                        blank=True,
+                        help_text="URL to the featured image (Cloudinary)",
+                        verbose_name="Featured Image URL",
+                    ),
+                ),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("draft", "Draft"),
+                            ("published", "Published"),
+                            ("archived", "Archived"),
+                        ],
+                        default="draft",
+                        max_length=20,
+                        verbose_name="Status",
+                    ),
+                ),
+                (
+                    "is_featured",
+                    models.BooleanField(
+                        default=False,
+                        help_text="Show in featured posts section",
+                        verbose_name="Featured",
+                    ),
+                ),
+                (
+                    "published_at",
+                    models.DateTimeField(
+                        blank=True, null=True, verbose_name="Published at"
+                    ),
+                ),
+                (
+                    "created_at",
+                    models.DateTimeField(auto_now_add=True, verbose_name="Created"),
+                ),
+                (
+                    "updated_at",
+                    models.DateTimeField(auto_now=True, verbose_name="Updated"),
+                ),
+                (
+                    "meta_title",
+                    models.CharField(
+                        blank=True,
+                        help_text="SEO title (max 70 chars)",
+                        max_length=70,
+                        verbose_name="Meta Title",
+                    ),
+                ),
+                (
+                    "meta_description",
+                    models.CharField(
+                        blank=True,
+                        help_text="SEO description (max 160 chars)",
+                        max_length=160,
+                        verbose_name="Meta Description",
+                    ),
+                ),
+                (
+                    "author",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="blog_posts",
+                        to=settings.AUTH_USER_MODEL,
+                        verbose_name="Author",
+                    ),
+                ),
+                (
+                    "category",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="posts",
+                        to="blog.category",
+                        verbose_name="Category",
+                    ),
+                ),
+                (
+                    "tags",
+                    models.ManyToManyField(
+                        blank=True,
+                        related_name="posts",
+                        to="blog.tag",
+                        verbose_name="Tags",
+                    ),
+                ),
             ],
             options={
-                'verbose_name': 'Post',
-                'verbose_name_plural': 'Posts',
-                'ordering': ['-published_at', '-created_at'],
+                "verbose_name": "Post",
+                "verbose_name_plural": "Posts",
+                "ordering": ["-published_at", "-created_at"],
             },
         ),
     ]

@@ -102,7 +102,9 @@ def send_test_email(config, to_email: str) -> tuple[bool, str]:
             error_data = response.json()
             error_message = error_data.get("message", response.text)
             logger.error(f"Resend API error: {error_message}")
-            return False, _("Failed to send email: %(error)s") % {"error": error_message}
+            return False, _("Failed to send email: %(error)s") % {
+                "error": error_message
+            }
 
     except requests.exceptions.Timeout:
         return False, _("Request timed out. Please try again.")
@@ -155,7 +157,9 @@ def send_email(to_email: str, subject: str, html_content: str) -> tuple[bool, st
             error_data = response.json()
             error_message = error_data.get("message", response.text)
             logger.error(f"Resend API error: {error_message}")
-            return False, _("Failed to send email: %(error)s") % {"error": error_message}
+            return False, _("Failed to send email: %(error)s") % {
+                "error": error_message
+            }
 
     except requests.exceptions.RequestException as e:
         logger.exception("Error sending email")

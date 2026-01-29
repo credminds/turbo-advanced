@@ -64,12 +64,14 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
     @display(description=_("User"))
     def display_avatar(self, instance):
         name = instance.get_full_name() or instance.username
-        if instance.profile_picture_url and instance.profile_picture_url.startswith("http"):
+        if instance.profile_picture_url and instance.profile_picture_url.startswith(
+            "http"
+        ):
             return format_html(
                 '<div style="display: flex; align-items: center; gap: 10px;">'
                 '<img src="{}" width="40" height="40" style="border-radius: 50%; object-fit: cover;" />'
                 '<div><strong>{}</strong><br><span style="color: #666; font-size: 12px;">{}</span></div>'
-                '</div>',
+                "</div>",
                 instance.profile_picture_url,
                 name,
                 instance.email or "-",
@@ -78,7 +80,7 @@ class UserAdmin(BaseUserAdmin, ModelAdmin):
             '<div style="display: flex; align-items: center; gap: 10px;">'
             '<div style="width: 40px; height: 40px; border-radius: 50%; background: #e5e7eb; display: flex; align-items: center; justify-content: center; color: #9ca3af; font-weight: bold;">{}</div>'
             '<div><strong>{}</strong><br><span style="color: #666; font-size: 12px;">{}</span></div>'
-            '</div>',
+            "</div>",
             name[0].upper() if name else "?",
             name,
             instance.email or "-",
