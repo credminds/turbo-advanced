@@ -1,4 +1,4 @@
-FROM node:21
+FROM node:24-bookworm-slim
 
 ENV NEXT_TELEMETRY_DISABLED=1
 

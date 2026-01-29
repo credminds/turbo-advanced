@@ -1,0 +1,24 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block object-tools-items %}
+{{ block.super }}
+<li>
+    <form method="post" action="{{ test_email_url }}" class="flex items-center gap-2">
+        {% csrf_token %}
+        <input
+            type="email"
+            name="test_email"
+            required
+            placeholder="test@example.com"
+            class="rounded-md border border-base-300 bg-white px-3 py-1.5 text-sm text-base-900 placeholder:text-base-400 focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500 dark:border-base-600 dark:bg-base-800 dark:text-base-100"
+        />
+        <button
+            type="submit"
+            class="inline-flex items-center rounded-md border border-transparent bg-primary-600 px-3 py-1.5 text-sm font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500"
+        >
+            {% trans "Send Test Email" %}
+        </button>
+    </form>
+</li>
+{% endblock %}

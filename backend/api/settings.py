@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     "drf_spectacular",
     "api",
+    "settings_config",
+    "blog",
 ]
 
 ######################################################################
@@ -163,6 +165,73 @@ UNFOLD = {
                         "title": _("Groups"),
                         "icon": "label",
                         "link": reverse_lazy("admin:auth_group_changelist"),
+                    },
+                ],
+            },
+            {
+                "title": _("Blog & Newsletter"),
+                "separator": True,
+                "items": [
+                    {
+                        "title": _("Posts"),
+                        "icon": "article",
+                        "link": reverse_lazy("admin:blog_post_changelist"),
+                    },
+                    {
+                        "title": _("Categories"),
+                        "icon": "category",
+                        "link": reverse_lazy("admin:blog_category_changelist"),
+                    },
+                    {
+                        "title": _("Tags"),
+                        "icon": "label",
+                        "link": reverse_lazy("admin:blog_tag_changelist"),
+                    },
+                    {
+                        "title": _("Subscribers"),
+                        "icon": "group",
+                        "link": reverse_lazy(
+                            "admin:blog_newslettersubscriber_changelist"
+                        ),
+                    },
+                    {
+                        "title": _("Newsletters"),
+                        "icon": "mail",
+                        "link": reverse_lazy("admin:blog_newsletter_changelist"),
+                    },
+                ],
+            },
+            {
+                "title": _("System Settings"),
+                "separator": True,
+                "items": [
+                    {
+                        "title": _("Stripe"),
+                        "icon": "credit_card",
+                        "link": reverse_lazy(
+                            "admin:settings_config_stripeconfiguration_changelist"
+                        ),
+                    },
+                    {
+                        "title": _("Resend (Email)"),
+                        "icon": "mail",
+                        "link": reverse_lazy(
+                            "admin:settings_config_resendconfiguration_changelist"
+                        ),
+                    },
+                    {
+                        "title": _("TinyMCE (Editor)"),
+                        "icon": "edit_note",
+                        "link": reverse_lazy(
+                            "admin:settings_config_tinymceconfiguration_changelist"
+                        ),
+                    },
+                    {
+                        "title": _("Cloudinary (Media)"),
+                        "icon": "cloud_upload",
+                        "link": reverse_lazy(
+                            "admin:settings_config_cloudinaryconfiguration_changelist"
+                        ),
                     },
                 ],
             },
